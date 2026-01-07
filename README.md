@@ -16,6 +16,7 @@ Docker Compose to run API + Redis together
 Clean, extensible project structure
 
 🏗️ Architecture Overview
+```
 Code
 ┌────────────────────────────┐
 │        .NET 10 API         │
@@ -30,6 +31,7 @@ Code
 │  - In‑memory key/value     │
 │  - Fast caching layer      │
 └────────────────────────────┘
+```
 📦 Prerequisites
 .NET 10 SDK
 
@@ -82,6 +84,7 @@ DELETE product
 Cached responses via Redis
 
 🗂️ Project Structure
+```
 Code
 NET-API-with-Redis/
 │
@@ -98,3 +101,5 @@ NET-API-with-Redis/
 ├── Dockerfile
 ├── docker-compose.yml
 └── README.md
+
+```
