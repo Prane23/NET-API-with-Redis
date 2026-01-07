@@ -8,28 +8,28 @@ It includes a RedisCacheService, example endpoints that use the cache‑aside pa
 and Docker Compose for running the API and Redis together.
 
 ## ✨ Key Features
-Cache‑aside pattern for API responses
-Singleton ConnectionMultiplexer for efficient Redis connections
-Reusable RedisCacheService with JSON serialization and TTL management
-Mock repository for deterministic local development and tests
-API versioning to support multiple API versions
-Docker Compose for consistent containerized development
+- Cache‑aside pattern for API responses
+- Singleton ConnectionMultiplexer for efficient Redis connections
+- Reusable RedisCacheService with JSON serialization and TTL management
+- Mock repository for deterministic local development and tests
+- API versioning to support multiple API versions
+- Docker Compose for consistent containerized development
 
 ## 🧰 Tech Stack
 
 Component	Purpose
-.NET 10	Web API framework
-StackExchange.Redis	Redis client
-Redis	In‑memory cache and counters
-Docker Compose	Local multi‑container orchestration
-System.Text.Json	JSON serialization
+- .NET 10	Web API framework
+- StackExchange.Redis	Redis client
+- Redis	In‑memory cache and counters
+- Docker Compose	Local multi‑container orchestration
+- System.Text.Json	JSON serialization
 
 ## 🏁 Getting Started
 Prerequisites
-.NET 10 SDK installed
-Docker and Docker Compose installed
-Run Locally
-Ensure Redis is available locally (Docker or native).
+- .NET 10 SDK installed
+- Docker and Docker Compose installed
+- Run Locally
+- Ensure Redis is available locally (Docker or native).
 
 Update appsettings.json if needed:
 
@@ -67,13 +67,13 @@ Code
 ```
 
 ## 🧠 Caching Pattern
-```
-Cache‑aside flow:
-Check Redis for cacheKey.
-If present → return cached value.
-If absent → fetch from repository (mock or real), store in Redis with TTL, return result.
-Example code snippet:
 
+Cache‑aside flow:
+- Check Redis for cacheKey.
+- If present → return cached value.
+- If absent → fetch from repository (mock or real), store in Redis with TTL, return result.
+Example code snippet:
+```
   const string cacheKey = "products:v2";
   var cached = await _cache.GetAsync<IEnumerable<Product>>(cacheKey);
   if (cached != null) return Ok(cached);
@@ -93,11 +93,11 @@ Open Swagger:
 http://localhost:7176/swagger
 You can test:
 
-GET all products
-GET product by ID
-POST new product
-PUT update product
-DELETE product
+- GET all products
+- GET product by ID
+- POST new product
+- PUT update product
+- DELETE product
 
 Cached responses via Redis
 
