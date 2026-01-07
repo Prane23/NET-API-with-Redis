@@ -32,39 +32,24 @@ Prerequisites
 - Ensure Redis is available locally (Docker or native).
 
 Update appsettings.json if needed:
-
+```
 json
 {
   "Redis": {
     "ConnectionString": "localhost:6379"
   }
 }
+```
 Start the API:
-bash
-dotnet run --project Api/Api.csproj
-Open Swagger: http://localhost:7176/swagger
-Run with Docker Compose
-Build and start containers:
-docker compose up --build
-API available at: http://localhost:9082/swagger
-Redis reachable from host at localhost:6379 and from the API container at redis:6379.
+  - Open Swagger (local run): http://localhost:7176/swagger
+  - Run with Docker Compose
+  - Build and start containers:
+  - docker compose up --build
+  - API available at: http://localhost:9082/swagger
+  - Redis reachable from host at localhost:6379 and from the API container at redis:6379.
 ## 🏗️ Architecture Overview
-```
-Code
-┌────────────────────────────┐
-│        .NET 10 API         │
-│  - Controllers              │
-│  - Mock Repository          │
-│  - Redis Cache Integration  │
-└──────────────┬─────────────┘
-               │
-               ▼
-┌────────────────────────────┐
-│           Redis            │
-│  - In‑memory key/value     │
-│  - Fast caching layer      │
-└────────────────────────────┘
-```
+<img width="800" height="600" alt="image" src="https://github.com/user-attachments/assets/918bcd15-babf-47a1-aa2e-2c53c428e338" />
+
 
 ## 🧠 Caching Pattern
 
@@ -74,12 +59,16 @@ Cache‑aside flow:
 - If absent → fetch from repository (mock or real), store in Redis with TTL, return result.
 Example code snippet:
 ```
-  const string cacheKey = "products:v2";
-  var cached = await _cache.GetAsync<IEnumerable<Product>>(cacheKey);
-  if (cached != null) return Ok(cached);
-  var products = _productService.GetAll().Where(p => p.Id > 2).ToList();
-  await _cache.SetAsync(cacheKey, products, TimeSpan.FromMinutes(5));
-  return Ok(products);
+           const string cacheKey = "products:v2";
+           // 1. Try Redis first
+           var cachedProducts = await _cache.GetAsync<IEnumerable<Product>>(cacheKey);
+           if (cachedProducts != null) 
+               return Ok(cachedProducts);
+           // 2. Fetch from service
+           var products = _productservice.GetAll().Where(p=>p.Id>2);
+           // 3. Save to Redis for 5 minutes
+           await _cache.SetAsync(cacheKey, products, TimeSpan.FromSeconds(15));
+           return Ok(products);
 ```
 ## 🧭 API Versioning
 Approach: route or header based versioning. Example route pattern:
