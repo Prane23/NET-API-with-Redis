@@ -90,23 +90,40 @@ You can test:
 
 Cached responses via Redis
 
+## 📘 Swagger Documentation
+<img width="1634" height="880" alt="image" src="https://github.com/user-attachments/assets/1b86055b-a36a-4346-9654-fef0710c806e" />
+
 ## 🗂️ Project Structure
 ```
-Code
 NET-API-with-Redis/
 │
-├── Controllers/
-│   └── ProductController.cs
+├── Controllers/                     # Versioned API endpoints
+│   ├── ProductController.cs         # v1 endpoints (/api/v1/products)
+│   └── ProductV2Controller.cs       # v2 endpoints (/api/v2/products)
 │
-├── Repository/
-│   └── MockProductRepository.cs
+├── Model/                           # Domain models
+│   └── Product.cs
 │
-├── Services/
-│   └── RedisCacheService.cs
+├── Properties/
+│   └── launchSettings.json
 │
-├── Program.cs
-├── Dockerfile
-├── docker-compose.yml
-└── README.md
+├── Repositories/                    # Data access abstractions + mock data
+│   ├── IProductRepository.cs
+│   └── MockProductRepository.cs     # Used for local/dev/testing
+│
+├── Services/                        # Business logic + Redis caching
+│   ├── ProductService.cs            # Product business logic
+│   └── RedisCacheService.cs         # Cache-aside, JSON serialization, TTL
+│
+├── Dockerfile                       # Builds API container
+├── docker-compose.yml               # Runs API + Redis together
+│
+├── Program.cs                       # DI setup, Redis connection, versioning
+├── appsettings.json                 # Local config (Redis: localhost)
+├── appsettings.Development.json
+│
+├── NET API with Redis.csproj
+└── NET API with Redis.http          # Sample HTTP requests for testing
+
 
 ```
