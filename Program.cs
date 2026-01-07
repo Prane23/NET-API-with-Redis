@@ -21,11 +21,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureOptions<SwaggerVersioningConfig>();
 
 // Redis
-var redisConn = builder.Configuration["REDIS_CONNECTION"] ?? "localhost:6379";
-builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConn));
+var redisConnection = builder.Configuration["Redis:ConnectionString"];
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnection));
 
 // Sample redis test start 
-var redis = ConnectionMultiplexer.Connect("localhost:6379");
+var redis = ConnectionMultiplexer.Connect(redisConnection);
+
 var db = redis.GetDatabase();
 await db.StringSetAsync("name", "Prashant");
 var value = await db.StringGetAsync("name");
@@ -34,7 +35,7 @@ var value = await db.StringGetAsync("name");
 // Add Services
 builder.Services.AddSingleton<IProductRepository, MockProductRepository>();
 builder.Services.AddScoped<ProductService>();
-
+builder.Services.AddScoped<RedisCacheService>();
 
 var app = builder.Build();
 

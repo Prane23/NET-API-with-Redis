@@ -5,7 +5,7 @@ namespace NET_API_with_Redis.Middleware
     public class RedisRateLimitMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly int _limit = 3;
+        private readonly int _limit = 10;
         private readonly int _windowSeconds = 100;
 
         public RedisRateLimitMiddleware(RequestDelegate next)
