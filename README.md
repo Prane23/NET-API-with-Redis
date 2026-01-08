@@ -16,7 +16,6 @@ and Docker Compose for running the API and Redis together.
 - Docker Compose for consistent containerized development
 
 ## 🧰 Tech Stack
-
 Component	Purpose
 - .NET 10	Web API framework
 - StackExchange.Redis	Redis client
@@ -87,7 +86,6 @@ You can test:
 - POST new product
 - PUT update product
 - DELETE product
-
 Cached responses via Redis
 
 ## 📘 Swagger Documentation
@@ -124,6 +122,15 @@ NET-API-with-Redis/
 │
 ├── NET API with Redis.csproj
 └── NET API with Redis.http          # Sample HTTP requests for testing
-
-
 ```
+## 🧩 Redis Cache Preview
+To help visualize how caching and rate limiting work inside the project, here’s a RedisInsight snapshot showing the keys created by the API.
+
+This makes it easy to see:
+  - Cached product lists
+  - Rate‑limit counters increasing per request
+  - TTL countdowns
+  - JSON‑serialized values stored by RedisCacheService
+## 📸 RedisInsight Screenshot
+  - <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/17b300d3-96f3-467d-9257-d992fdd5fb82" />
+
