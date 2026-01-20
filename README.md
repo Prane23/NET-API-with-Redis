@@ -134,3 +134,6 @@ This makes it easy to see:
 ## 📸 RedisInsight Screenshot
   - <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/17b300d3-96f3-467d-9257-d992fdd5fb82" />
 
+## 🙌 Author  
+**Prashant**  
+.NET Core API | Redis Caching | High-Performance Architecture
