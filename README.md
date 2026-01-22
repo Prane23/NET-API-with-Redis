@@ -1,4 +1,4 @@
-# 🚀 NET API with Redis (Dockerized)
+# 🐳 NET API with Redis (Dockerized)
 A practical, production‑oriented example showing how to integrate Redis with a .NET 10 Web API. This repository demonstrates containerized development,
 a reusable caching layer, a mock data repository for local development and testing, and a simple versioning strategy.
 
@@ -14,7 +14,7 @@ and Docker Compose for running the API and Redis together.
 - Mock repository for deterministic local development and tests
 - API versioning to support multiple API versions
 - Docker Compose for consistent containerized development
-
+---
 ## 🧰 Tech Stack
 Component	Purpose
 - .NET 10	Web API framework
@@ -22,7 +22,7 @@ Component	Purpose
 - Redis	In‑memory cache and counters
 - Docker Compose	Local multi‑container orchestration
 - System.Text.Json	JSON serialization
-
+---
 ## 🏁 Getting Started
 Prerequisites
 - .NET 10 SDK installed
@@ -46,12 +46,12 @@ Start the API:
   - docker compose up --build
   - API available at: http://localhost:9082/swagger
   - Redis reachable from host at localhost:6379 and from the API container at redis:6379.
+---
 ## 🏗️ Architecture Overview
 <img width="800" height="600" alt="image" src="https://github.com/user-attachments/assets/918bcd15-babf-47a1-aa2e-2c53c428e338" />
 
-
 ## 🧠 Caching Pattern
-
+---
 Cache‑aside flow:
 - Check Redis for cacheKey.
 - If present → return cached value.
@@ -75,7 +75,7 @@ Approach: route or header based versioning. Example route pattern:
 /api/v2/products
 Use Microsoft.AspNetCore.Mvc.Versioning or manual route prefixes. Keep controllers versioned and maintain backward compatibility by introducing new controllers or endpoints under new version routes.
 
-##🧪 Testing the API
+## 🧪 Testing the API
 Open Swagger:
 
 http://localhost:7176/swagger
@@ -87,7 +87,7 @@ You can test:
 - PUT update product
 - DELETE product
 Cached responses via Redis
-
+---
 ## 📘 Swagger Documentation
 <img width="1634" height="880" alt="image" src="https://github.com/user-attachments/assets/1b86055b-a36a-4346-9654-fef0710c806e" />
 
@@ -123,6 +123,7 @@ NET-API-with-Redis/
 ├── NET API with Redis.csproj
 └── NET API with Redis.http          # Sample HTTP requests for testing
 ```
+---
 ## 🧩 Redis Cache Preview
 To help visualize how caching and rate limiting work inside the project, here’s a RedisInsight snapshot showing the keys created by the API.
 
@@ -132,7 +133,7 @@ This makes it easy to see:
   - TTL countdowns
   - JSON‑serialized values stored by RedisCacheService
 ## 📸 RedisInsight Screenshot
-  - <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/17b300d3-96f3-467d-9257-d992fdd5fb82" />
+<img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/17b300d3-96f3-467d-9257-d992fdd5fb82" />
 
 ## 🙌 Author  
 **Prashant**  
