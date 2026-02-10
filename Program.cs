@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using NET_API_with_Redis.Middleware;
 using NET_API_with_Redis.Repositories;
 using NET_API_with_Redis.Service;
@@ -11,11 +12,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 
-// Api Versioning
-builder.Services.AddApiVersioningConfig();
+// Versioning + versioned API explorer
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+})
+.AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+
+// Swagger (Swashbuckle)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureOptions<SwaggerVersioningConfig>();
@@ -42,11 +54,6 @@ var app = builder.Build();
 // Middleware
 app.UseMiddleware<RedisRateLimitMiddleware>();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
 
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 

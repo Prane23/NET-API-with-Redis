@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NET_API_with_Redis.Model;
 using NET_API_with_Redis.Services;
@@ -6,7 +7,6 @@ using NET_API_with_Redis.Services;
 namespace NET_API_with_Redis.Controllers
 {
     [ApiController]
-    [ApiVersion("2.0")]
     [ApiVersion("2.0")] 
     [Route("api/v{version:apiVersion}/product")]   
     public class ProductV2Controller : ControllerBase
@@ -21,6 +21,7 @@ namespace NET_API_with_Redis.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("2.0")]
         public async Task<IActionResult> GetAllV2()
         {
             const string cacheKey = "products:v2";
