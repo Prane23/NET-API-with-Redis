@@ -2,11 +2,13 @@
 A practical, production‑oriented example showing how to integrate Redis with a .NET 10 Web API. This repository demonstrates containerized development,
 a reusable caching layer, a mock data repository for local development and testing, and a simple versioning strategy.
 
+---
 ## 🔍 Overview
 This project is a minimal but complete reference for building a high‑performance .NET API that uses Redis for caching and counters.
 It includes a RedisCacheService, example endpoints that use the cache‑aside pattern, a mock repository for fast local development, 
 and Docker Compose for running the API and Redis together.
 
+---
 ## ✨ Key Features
 - Cache‑aside pattern for API responses
 - Singleton ConnectionMultiplexer for efficient Redis connections
@@ -23,6 +25,15 @@ Component	Purpose
 - Docker Compose	Local multi‑container orchestration
 - System.Text.Json	JSON serialization
 ---
+📌 How Redis Is Used
+This project integrates Redis as a distributed cache to:
+- Cache frequently accessed data
+- Reduce response times
+- Minimize repeated database access
+- Improve scalability for read‑heavy workloads
+
+---
+
 ## 🏁 Getting Started
 Prerequisites
 - .NET 10 SDK installed
@@ -69,11 +80,38 @@ Example code snippet:
            await _cache.SetAsync(cacheKey, products, TimeSpan.FromSeconds(15));
            return Ok(products);
 ```
-## 🧭 API Versioning
+---
+## 🧩 API Versioning
+This project includes API Versioning to allow multiple versions of the API to coexist without breaking existing clients.
+
 Approach: route or header based versioning. Example route pattern:
-/api/v1/products
-/api/v2/products
-Use Microsoft.AspNetCore.Mvc.Versioning or manual route prefixes. Keep controllers versioned and maintain backward compatibility by introducing new controllers or endpoints under new version routes.
+- /api/v1/products
+- /api/v2/products
+- Keep controllers versioned and maintain backward compatibility by introducing new controllers or endpoints under new version routes.
+- Example setup (Program.cs):
+  ```
+     builder.Services.AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.ReportApiVersions = true;
+    });
+
+- Usage in controllers:
+  ```
+    [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    public class ProductController : ControllerBase
+    {
+        // Actions ...
+    }
+
+Benefits:
+- Safe evolution of APIs
+- Backward compatibility
+- Clear lifecycle management
+---
 
 ## 🧪 Testing the API
 Open Swagger:
@@ -144,6 +182,21 @@ This makes it easy to see:
   - JSON‑serialized values stored by RedisCacheService
 ## 📸 RedisInsight Screenshot
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/17b300d3-96f3-467d-9257-d992fdd5fb82" />
+
+## 🚦Rate Limiting with Redis
+This project includes a simple, production‑friendly Redis‑backed rate limiting middleware.
+It limits how many requests a client (identified by IP address) can make within a sliding time window.
+ - How It Works
+     - Each request increments a Redis counter with a time‑based key:
+     - The counter is set to expire after a configured window (e.g., 100 seconds).
+     - If the request count exceeds the allowed limit, the middleware returns: → 429 Too Many Requests
+     - Otherwise, the request continues through the pipeline.
+
+- Benefits
+  - Fully distributed → works across multiple API instances
+  - Lightweight → no external libraries required
+  - Uses Redis TTL for self-cleaning counters
+  - Easy to tune (adjust _limit and _windowSeconds)
 
 ## 🙌 Author  
 **Prashant**  
