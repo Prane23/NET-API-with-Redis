@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -22,7 +23,7 @@ namespace NET_API_with_Redis.Versioning
                     Title = $"NET API with Redis {description.ApiVersion}",
                     Version = description.ApiVersion.ToString()
                 });
-                options.DocInclusionPredicate((docName, apiDesc) => true);
+                //options.DocInclusionPredicate((docName, apiDesc) => true);
 
             }
          
