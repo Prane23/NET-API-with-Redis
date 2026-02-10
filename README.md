@@ -89,7 +89,11 @@ You can test:
 Cached responses via Redis
 ---
 ## 📘 Swagger Documentation
-<img width="1634" height="880" alt="image" src="https://github.com/user-attachments/assets/1b86055b-a36a-4346-9654-fef0710c806e" />
+  - V1
+<img width="1670" height="883" alt="image" src="https://github.com/user-attachments/assets/961b2960-0c8c-4ec3-807f-36330da1e76f" />
+  - V2
+<img width="1716" height="605" alt="image" src="https://github.com/user-attachments/assets/45c01ba4-6f62-4a9c-ae93-ce9e496e8a3a" />
+
 
 ## 🗂️ Project Structure
 ```
@@ -119,6 +123,12 @@ NET-API-with-Redis/
 ├── Program.cs                       # DI setup, Redis connection, versioning
 ├── appsettings.json                 # Local config (Redis: localhost)
 ├── appsettings.Development.json
+│
+├── Middleware/                           # Redis Rate Limit Middleware
+│   └── RedisRateLimitMiddleware.cs
+│
+├── Versioning/                           # Swagger Versioning Config
+│   └── SwaggerVersioningConfig.cs
 │
 ├── NET API with Redis.csproj
 └── NET API with Redis.http          # Sample HTTP requests for testing
