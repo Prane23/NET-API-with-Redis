@@ -12,7 +12,7 @@ namespace NET_API_with_Redis.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        public readonly ProductService _productservice;
+        private readonly ProductService _productservice;
 
         public ProductController(ProductService productService)
         {

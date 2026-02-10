@@ -11,7 +11,7 @@ namespace NET_API_with_Redis.Controllers
     [Route("api/v{version:apiVersion}/product")]   
     public class ProductV2Controller : ControllerBase
     {
-        public readonly ProductService _productservice;
+        private readonly ProductService _productservice;
         private readonly RedisCacheService _cache;
 
         public ProductV2Controller(ProductService productService, RedisCacheService cache)
